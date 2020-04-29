@@ -1,10 +1,3 @@
-# DOING: Implementing queue for all socket and use select for all socket including telemetry
-# not really sure if select works with UDP socket
-# TODO: Logger for commands send by robots
-# TODO: Implement manager to handle multiple robots.
-# TODO: move telemetry to manager. with different select and manager to telemtry data into multiple robots
-# TODO: Sequence number mechanism of rOBOmaster EP
-
 import socket
 import select
 import types
