@@ -1,9 +1,3 @@
-#TODO: Add states handling in process_sock. command->takeoff>in_flight->land
-#TODO: When in flight, no command in 5 seconds. send command to keep hovering.
-#TODO: when error land, go into land
-#TODo: command sent are added into queue.
-#TODO: in_action state = false or true
-
 import socket
 import select
 import types
@@ -124,19 +118,16 @@ class Tello:
     
     def send(self, data):
         self.last_cmd = data.lower()
-#        self._cmdseq = (self._cmdseq + 1) % 100 
 
         try:
             if data.lower() == 'command' and self.in_command_mode == False:
                 print("Connecting to %s" % self.tello_ip)
                 self.connecting = True
-#                data = data.rstrip() + ' ' + str(self._cmdseq)
                 self.cmd_queue.put(data.rstrip())
             else:
                 if self.in_command_mode == False:
                     print('Drone %s unable to process as not in command mode' % self.tello_ip)
                 else:
-#                    data = data.rstrip() + ' ' + str(self._cmdseq)                    
                     self.cmd_queue.put(data.rstrip())
             return True
         except queue.Full as err:
